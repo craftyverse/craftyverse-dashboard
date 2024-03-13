@@ -1,8 +1,15 @@
+import { Input } from './components/atoms/Input';
 import './styles.css';
+
 const App = () => {
   return (
     <div>
-      <h1>Craftyverse</h1>
+      <Input
+        labelName="First Name"
+        inputType="text"
+        placeholderName="First Name"
+        inputErrorMsg={'Please provide a email'}
+      />
     </div>
   );
 };

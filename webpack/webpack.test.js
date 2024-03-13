@@ -1,13 +1,16 @@
-const Dotenv = require("dotenv-webpack");
+const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin =
+  require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
-modules.exports = env => {
+module.exports = (env) => {
   return {
-    mode: "production",
-    devtool: "source-map",
+    mode: 'production',
+    devtool: 'source-map',
     plugins: [
       new Dotenv({
-        path: "./.env.test",
+        path: './.env.test',
       }),
+      new BundleAnalyzerPlugin(),
     ],
   };
 };
