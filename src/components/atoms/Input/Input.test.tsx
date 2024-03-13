@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Input } from './Input';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 describe('<Input />', () => {
@@ -56,6 +57,48 @@ describe('<Input />', () => {
     it('should render the user icon when the labelName is "Last Name"', () => {
       render(<Input inputType="text" labelName="Last Name" placeholderName="Last Name" />);
       expect(screen.getByTestId('user-icon')).toBeInTheDocument();
+    });
+  });
+
+  describe('<Input /> password type', () => {
+    it('should render <Input /> component with "Password" as the placeholder and label text text', () => {
+      render(<Input inputType="password" labelName="Password" placeholderName="Password" />);
+      expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
+      expect(screen.getByText('Password')).toBeInTheDocument();
+    });
+
+    it('should render the lock icon when the labelName is "Password"', () => {
+      render(<Input inputType="password" labelName="Password" placeholderName="Password" />);
+      expect(screen.getByTestId('password-icon')).toBeInTheDocument();
+    });
+
+    it('should render the eye-icon icon when the password is visible', async () => {
+      render(<Input inputType="password" labelName="Password" placeholderName="Password" />);
+
+      expect(screen.getByTestId('eye-hide-icon')).toBeInTheDocument();
+
+      //Check if the input type is password
+      const input = screen.getByPlaceholderText('Password');
+      expect(input).toHaveAttribute('type', 'password');
+    });
+
+    it('should render the eye-icon icon when the password is visible', async () => {
+      render(<Input inputType="password" labelName="Password" placeholderName="Password" />);
+      const showPasswordButton = screen.getByRole('button');
+      await userEvent.click(showPasswordButton);
+      expect(screen.getByTestId('eye-icon')).toBeInTheDocument();
+
+      //Check if the input type is text
+      const input = screen.getByRole('textbox');
+      expect(input).toHaveAttribute('type', 'text');
+    });
+  });
+
+  describe('<Input /> number type', () => {
+    it('should render <Input /> component with "Number" as the placeholder and label text text', () => {
+      render(<Input inputType="number" labelName="Number" placeholderName="Number" />);
+      expect(screen.getByPlaceholderText('Number')).toBeInTheDocument();
+      expect(screen.getByText('Number')).toBeInTheDocument();
     });
   });
 });

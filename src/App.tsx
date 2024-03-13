@@ -4,12 +4,7 @@ import './styles.css';
 const App = () => {
   return (
     <div>
-      <Input
-        labelName="First Name"
-        inputType="text"
-        placeholderName="First Name"
-        inputErrorMsg={'Please provide a email'}
-      />
+      <Input labelName="count" inputType="number" placeholderName="number" inputErrorMsg={'Please provide a email'} />
     </div>
   );
 };

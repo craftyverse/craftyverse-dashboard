@@ -65,9 +65,13 @@ const Input: React.FC<inputProps> = ({
     return (
       <button onClick={handleTogglePasswordVisibility}>
         {!togglePasswordVisibility ? (
-          <IcomoonReact className={styles.eyehideIcon} iconSet={iconSet} icon="eye-hide" size={24} color="#000000" />
+          <div data-testid="eye-hide-icon">
+            <IcomoonReact className={styles.eyehideIcon} iconSet={iconSet} icon="eye-hide" size={24} color="#000000" />
+          </div>
         ) : (
-          <IcomoonReact className={styles.eyehideIcon} iconSet={iconSet} icon="eye" size={24} color="#000000" />
+          <div data-testid="eye-icon">
+            <IcomoonReact className={styles.eyehideIcon} iconSet={iconSet} icon="eye" size={24} color="#000000" />
+          </div>
         )}
       </button>
     );
@@ -101,7 +105,7 @@ const Input: React.FC<inputProps> = ({
             value={value}
           />
         )}
-        <div className={styles.eyeIcon}>{labelName.includes('Password') && renderPasswordIconToggle()}</div>
+        <div className={styles.inputEyeIcon}>{labelName.includes('Password') && renderPasswordIconToggle()}</div>
       </div>
       <p className={styles.inputErrorMessage}>{inputErrorMsg}</p>
     </div>
