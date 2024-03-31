@@ -1,16 +1,11 @@
-import { Input } from './components/atoms/Input';
+import { SignupPage } from './pages/SignupPage';
 import './styles.css';
 
 const App = () => {
   return (
-    <div>
-      <Input
-        labelName="count"
-        inputType="number"
-        placeholderName="number"
-        inputErrorMsg={'Please provide a email'}
-      />
-    </div>
+    <main>
+      <SignupPage />
+    </main>
   );
 };
 
