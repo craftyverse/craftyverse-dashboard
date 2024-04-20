@@ -3,7 +3,7 @@ import iconSet from '../../../icons/selection.json';
 import IcomoonReact from 'icomoon-react';
 import styles from './Input.module.scss';
 
-export interface inputProps {
+export interface InputProps {
   inputType: 'email' | 'text' | 'password' | 'number';
   labelName: string;
   placeholderName: string;
@@ -62,7 +62,7 @@ const renderInputIcons = (type: string, labelName: string) => {
   }
 };
 
-const Input: React.FC<inputProps> = ({
+const Input: React.FC<InputProps> = ({
   inputType,
   labelName,
   placeholderName,

@@ -2,7 +2,6 @@
 
 .inputContainer {
   display: block;
-  min-width: 339px;
 
   .inputLabelName {
     font-size: 16px;
@@ -22,9 +21,8 @@
     display: flex;
     align-items: center;
     justify-content: start;
+    width: calc(100% - 32px);
     height: 56px;
-    width: 100%;
-    min-width: 339px;
     background-color: map-get($map: $grey-palette, $key: 50);
     padding: 0 16px;
     border-radius: 12px;

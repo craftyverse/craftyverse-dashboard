@@ -1,0 +1,34 @@
+@import '../../../styles/pallate.module.scss';
+
+.signupFormContainer {
+  display: flex;
+  justify-content: center;
+  background-color: map-get($map: $grey-palette, $key: 0);
+  height: 760px;
+  width: 620px;
+  border-radius: 10px;
+
+  .signupFormContent {
+    margin: 40px;
+
+    .signupFormProfileNames {
+      display: flex;
+      gap: 8px;
+      padding-top: 24px;
+      margin-bottom: 24px;
+    }
+
+    .signupFormInfo {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    & h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: map-get($map: $grey-palette, $key: 7);
+      margin: 0 0 20px 0;
+    }
+  }
+}
