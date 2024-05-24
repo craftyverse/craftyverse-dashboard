@@ -8,5 +8,5 @@ module.exports = {
   testMatch: ['**/?(*.)+(spec|test).tsx'],
   moduleDirectories: ['<rootDir>/node_modules', '<rootDir>/src'],
   setupFilesAfterEnv: ['<rootDir>/setupTests.ts'], // this is the KEY
-  // note it should be in the top level of the exported object.
+
 };

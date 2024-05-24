@@ -1,4 +1,5 @@
 import React, { MouseEventHandler } from 'react';
+import { Spinner } from '../Spinner';
 
 import styles from './Button.module.scss';
 
@@ -7,9 +8,16 @@ export interface ButtonProps {
   size: 'large' | 'medium' | 'small';
   buttonText: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ type, size, buttonText, onClick }) => {
+const Button: React.FC<ButtonProps> = ({
+  type,
+  size,
+  buttonText,
+  onClick,
+  isLoading,
+}) => {
   return (
     <div
       className={
@@ -25,7 +33,7 @@ const Button: React.FC<ButtonProps> = ({ type, size, buttonText, onClick }) => {
         }
       >
         <button className={styles.button} onClick={onClick}>
-          {buttonText}
+          {isLoading ? <Spinner /> : buttonText}
         </button>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Input } from './Input';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 
 describe('<Input />', () => {
