@@ -88,7 +88,9 @@ export const SignupForm = () => {
       `${process.env.AUTH_SERVICE_URL}/api/users/v1/authentication/registerUser`,
       {
         method: 'POST',
-        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(userSignupData),
       }
     );
