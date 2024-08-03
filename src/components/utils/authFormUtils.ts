@@ -1,5 +1,7 @@
-import { UserSignupData } from "./SignupForm";
-export class SignupFormUtils {
+import { UserSignupData } from "../Authentication/SignupForm/SignupForm";
+import { UserSignInData } from "../Authentication/SignInForm/SigninForm";
+
+export class AuthFormUtils {
   static validateUserFirstName(userFirstName: string): {
     validUserFirstName: boolean;
     errorMsg?: string;
@@ -192,6 +194,22 @@ export class SignupFormUtils {
 
     return {
       validUserConfirmPassword: true,
+    };
+  }
+
+  static validateUserSigninData(userSignInData: UserSignInData): {
+    validUserSigninData: boolean;
+    errorMsg?: string;
+  } {
+    if (userSignInData.userEmail === "" || userSignInData.userPassword === "") {
+      return {
+        validUserSigninData: false,
+        errorMsg: "Please fill in all fields.",
+      };
+    }
+
+    return {
+      validUserSigninData: true,
     };
   }
 

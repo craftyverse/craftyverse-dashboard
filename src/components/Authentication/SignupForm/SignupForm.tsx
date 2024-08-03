@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button, Input, Checkbox } from "../../Common";
 import "./SignupForm.scss";
-import { SignupFormUtils } from "./SignupFormUtils";
+import { AuthFormUtils } from "../../utils/authFormUtils";
 import { ApiCall } from "../../../utils/ApiCall";
 import { Link } from "react-router-dom";
 import { AuthFormContainer } from "../Containers";
@@ -91,13 +91,14 @@ export const SignupForm = () => {
     userPassword,
     userConfirmPassword,
     userSignupData,
+    isTermsAndConditionsChecked,
   ]);
 
   // Handle form submission
   const handleFormSubmit = async () => {
     setIsLoading(true);
     setUserFormErrorMsg(
-      SignupFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
+      AuthFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
     );
     await ApiCall.post(
       `${
@@ -105,8 +106,6 @@ export const SignupForm = () => {
       }/api/users/v1/authentication/registeruser`,
       userSignupData
     );
-
-    console.log("This is the user data: ", userSignupData);
 
     //TODO: save the data to a redux store (TBA)
     setIsLoading(false);
@@ -124,8 +123,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserFirstName(event.target.value);
               setUserFirstNameErrorMsg(
-                SignupFormUtils.validateUserFirstName(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserFirstName(event.target.value).errorMsg
               );
             }}
           />
@@ -137,8 +135,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserLastName(event.target.value);
               setUserLastNameErrorMsg(
-                SignupFormUtils.validateUserLastName(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserLastName(event.target.value).errorMsg
               );
             }}
           />
@@ -152,7 +149,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserEmail(event.target.value);
               setUserEmailErrorMsg(
-                SignupFormUtils.validateUserEmail(event.target.value).errorMsg
+                AuthFormUtils.validateUserEmail(event.target.value).errorMsg
               );
             }}
           />
@@ -164,8 +161,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserPassword(event.target.value);
               setUserPasswordErrorMsg(
-                SignupFormUtils.validateUserPassword(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserPassword(event.target.value).errorMsg
               );
             }}
           />
@@ -177,7 +173,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserConfirmPassword(event.target.value);
               setUserConfirmPasswordErrorMsg(
-                SignupFormUtils.validateUserConfirmPassword(
+                AuthFormUtils.validateUserConfirmPassword(
                   event.target.value,
                   userPassword
                 ).errorMsg

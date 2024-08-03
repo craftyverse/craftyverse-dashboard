@@ -1,12 +1,13 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { SignupForm } from "./SignupForm";
+import { renderWithRouter } from "../../../test/testUtils";
 import nock from "nock";
 
 import "@testing-library/jest-dom";
 
 describe("<SignupForm />", () => {
   beforeEach(() => {
-    render(<SignupForm />);
+    renderWithRouter(<SignupForm />);
   });
   it("should render <SignupForm /> component", () => {
     expect(
@@ -228,17 +229,9 @@ describe("<SignupForm />", () => {
   });
 
   describe("Submit Button", () => {
-    const response = nock(`${import.meta.env.VITE_AUTH_SERVICE_URL}`)
+    nock(`${import.meta.env.VITE_AUTH_SERVICE_URL}`)
       .post("/api/users/v1/authentication/registeruser")
-      .reply(200, {
-        userFirstName: "Tony",
-        userLastName: "Li",
-        userEmail: "tony.li@test.io",
-        userPassword: "Password123!",
-        userConfirmPassword: "Password123!",
-        userRoles: [],
-        isTermsAndConditionsAccepted: undefined,
-      });
+      .reply(200, { accessToken: "accessToken" });
     it("should render the submit button", () => {
       expect(
         screen.getByRole("button", { name: "Sign up" })
@@ -269,15 +262,19 @@ describe("<SignupForm />", () => {
       fireEvent.blur(screen.getByPlaceholderText("Confirm your password"), {
         target: { value: "Password123!" },
       });
-      fireEvent.click(screen.getByTestId("termsAndConditionsCheckbox"));
+
+      fireEvent.click(
+        screen.getByLabelText(
+          /By proceeding, you agree to the Terms and Conditions/i
+        )
+      );
 
       fireEvent.click(screen.getByRole("button", { name: "Sign up" }));
-      console.log(response);
 
       const errorMsg = screen.queryByText(
         "Please accept the terms and conditions."
       );
-      expect(errorMsg).toBeInTheDocument();
+      expect(errorMsg).not.toBeInTheDocument();
     });
   });
 });

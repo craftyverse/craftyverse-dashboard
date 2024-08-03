@@ -7,7 +7,7 @@ import { SigninPage } from "./pages/SignInPage";
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/register" />} />
+      <Route path="/" element={<Navigate to="/login" />} />
       <Route path="/register" element={<SignupPage />} />
       <Route path="/login" element={<SigninPage />} />
     </Routes>
