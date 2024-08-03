@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Button, Input, Checkbox } from "../../Common";
 import "./SignupForm.scss";
-import { SignupFormUtils } from "./SignupFormUtils";
+import { AuthFormUtils } from "../../utils/authFormUtils";
 import { ApiCall } from "../../../utils/ApiCall";
+import { Link } from "react-router-dom";
+import { AuthFormContainer } from "../Containers";
 
 export type UserSignupData = {
   userFirstName: string;
@@ -89,13 +91,14 @@ export const SignupForm = () => {
     userPassword,
     userConfirmPassword,
     userSignupData,
+    isTermsAndConditionsChecked,
   ]);
 
   // Handle form submission
   const handleFormSubmit = async () => {
     setIsLoading(true);
     setUserFormErrorMsg(
-      SignupFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
+      AuthFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
     );
     await ApiCall.post(
       `${
@@ -104,16 +107,13 @@ export const SignupForm = () => {
       userSignupData
     );
 
-    console.log("This is the user data: ", userSignupData);
-
     //TODO: save the data to a redux store (TBA)
     setIsLoading(false);
   };
 
   return (
-    <section className="signupFormContainer">
+    <AuthFormContainer formTitle="Create your craftyverse account">
       <div className="signupFormContent">
-        <h1>Create your craftyverse account</h1>
         <div className="signupFormProfileNames">
           <Input
             inputType="text"
@@ -123,8 +123,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserFirstName(event.target.value);
               setUserFirstNameErrorMsg(
-                SignupFormUtils.validateUserFirstName(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserFirstName(event.target.value).errorMsg
               );
             }}
           />
@@ -136,8 +135,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserLastName(event.target.value);
               setUserLastNameErrorMsg(
-                SignupFormUtils.validateUserLastName(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserLastName(event.target.value).errorMsg
               );
             }}
           />
@@ -151,7 +149,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserEmail(event.target.value);
               setUserEmailErrorMsg(
-                SignupFormUtils.validateUserEmail(event.target.value).errorMsg
+                AuthFormUtils.validateUserEmail(event.target.value).errorMsg
               );
             }}
           />
@@ -163,8 +161,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserPassword(event.target.value);
               setUserPasswordErrorMsg(
-                SignupFormUtils.validateUserPassword(event.target.value)
-                  .errorMsg
+                AuthFormUtils.validateUserPassword(event.target.value).errorMsg
               );
             }}
           />
@@ -176,7 +173,7 @@ export const SignupForm = () => {
             onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
               setUserConfirmPassword(event.target.value);
               setUserConfirmPasswordErrorMsg(
-                SignupFormUtils.validateUserConfirmPassword(
+                AuthFormUtils.validateUserConfirmPassword(
                   event.target.value,
                   userPassword
                 ).errorMsg
@@ -210,10 +207,13 @@ export const SignupForm = () => {
             errorMsg={userFormErrorMsg}
           />
         </div>
-        <p>
-          Already have an account? <a href="#">Sign In</a>
+        <p className="loginCta">
+          Already have an account?{" "}
+          <Link className="loginLink" to="/login">
+            Sign In
+          </Link>
         </p>
       </div>
-    </section>
+    </AuthFormContainer>
   );
 };

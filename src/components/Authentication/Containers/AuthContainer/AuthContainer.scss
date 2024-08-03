@@ -1,19 +1,19 @@
-@import "../../styles/global.scss";
-@import "../../styles/pallate.scss";
+@import "../../../../styles/global.scss";
+@import "../../../../styles/pallate.scss";
 
-.signupPageContainer {
+.authContainerWrapper {
   display: grid;
   height: 100vh;
   grid-template-columns: 1fr 1fr; /* equal width columns */
   background-color: map-get($map: $milk-palette, $key: 200);
 
-  .signupPageFormContainer {
+  .authContainerContents {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .signupGraphicContainer {
+  .authContainerLogo {
     display: flex;
     justify-content: center;
     align-items: center;
