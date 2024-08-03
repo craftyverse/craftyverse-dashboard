@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { Button, Input, Checkbox } from "../../Common";
 import "./SignupForm.scss";
 import { SignupFormUtils } from "./SignupFormUtils";
+import { ApiCall } from "../../../utils/ApiCall";
+import { Link } from "react-router-dom";
+import { AuthFormContainer } from "../Containers";
 
 export type UserSignupData = {
   userFirstName: string;
@@ -117,9 +120,8 @@ export const SignupForm = () => {
   };
 
   return (
-    <section className="signupFormContainer">
+    <AuthFormContainer formTitle="Create your craftyverse account">
       <div className="signupFormContent">
-        <h1>Create your craftyverse account</h1>
         <div className="signupFormProfileNames">
           <Input
             inputType="text"
@@ -212,7 +214,13 @@ export const SignupForm = () => {
             errorMsg={userFormErrorMsg}
           />
         </div>
+        <p className="loginCta">
+          Already have an account?{" "}
+          <Link className="loginLink" to="/login">
+            Sign In
+          </Link>
+        </p>
       </div>
-    </section>
+    </AuthFormContainer>
   );
 };
