@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Input, Checkbox } from "../../Common";
 import "./SignupForm.scss";
 import { SignupFormUtils } from "./SignupFormUtils";
+import { ApiCall } from "../../../utils/ApiCall";
 
 export type UserSignupData = {
   userFirstName: string;
@@ -22,7 +23,7 @@ export const SignupForm = () => {
     userPassword: "",
     userConfirmPassword: "",
     userRoles: [],
-    isTermsAndConditionsAccepted: undefined,
+    isTermsAndConditionsAccepted: false,
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -67,7 +68,9 @@ export const SignupForm = () => {
       userSignupData.userLastName !== userLastName ||
       userSignupData.userEmail !== userEmail ||
       userSignupData.userPassword !== userPassword ||
-      userSignupData.userConfirmPassword !== userConfirmPassword
+      userSignupData.userConfirmPassword !== userConfirmPassword ||
+      userSignupData.isTermsAndConditionsAccepted !==
+        isTermsAndConditionsChecked
     ) {
       setUserSignupData({
         userFirstName: userFirstName,
@@ -94,26 +97,17 @@ export const SignupForm = () => {
     setUserFormErrorMsg(
       SignupFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
     );
-    const response = await fetch(
-      `${process.env.AUTH_SERVICE_URL}/api/users/v1/authentication/registeruser`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userSignupData),
-      }
+    await ApiCall.post(
+      `${
+        import.meta.env.VITE_AUTH_SERVICE_URL
+      }/api/users/v1/authentication/registeruser`,
+      userSignupData
     );
 
-    await response.json();
     console.log("This is the user data: ", userSignupData);
 
     //TODO: save the data to a redux store (TBA)
     setIsLoading(false);
-  };
-
-  const handleTermsAndConditionsCheck = () => {
-    setIsTermsAndConditionsChecked((prev) => !prev);
   };
 
   return (
@@ -193,12 +187,16 @@ export const SignupForm = () => {
         <div className="termsConditions">
           <Checkbox
             checked={isTermsAndConditionsChecked}
-            onChange={handleTermsAndConditionsCheck}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setIsTermsAndConditionsChecked(event.target.checked)
+            }
             checkboxId="termsAndConditionsCheckbox"
           >
             <p>
               By proceeding, you agree to the{" "}
-              <a href="#">Terms and Conditions</a>
+              <a className="termsAndConditionsLink" href="#">
+                Terms and Conditions
+              </a>
             </p>
           </Checkbox>
         </div>
@@ -212,6 +210,9 @@ export const SignupForm = () => {
             errorMsg={userFormErrorMsg}
           />
         </div>
+        <p>
+          Already have an account? <a href="#">Sign In</a>
+        </p>
       </div>
     </section>
   );

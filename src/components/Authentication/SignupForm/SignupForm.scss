@@ -29,6 +29,11 @@
       display: flex;
       align-items: center;
       padding-top: map-get($spacers, 8);
+      .termsAndConditionsLink {
+        color: $logo-main;
+        font-weight: 600;
+        text-decoration: none;
+      }
     }
 
     .signupFormBtn {

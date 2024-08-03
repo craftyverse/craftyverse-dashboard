@@ -19,10 +19,11 @@ const Checkbox: React.FC<CheckboxProps> = ({
   onChange,
 }) => {
   return (
-    <div className="checkboxContainer">
+    <div data-testid={checkboxId} className="checkboxContainer">
       <input
         id={checkboxId}
         type="checkbox"
+        name={checkboxId}
         className="checkbox"
         onChange={onChange}
         disabled={disabled}
