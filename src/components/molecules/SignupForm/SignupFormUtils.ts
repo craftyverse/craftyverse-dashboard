@@ -1,4 +1,3 @@
-import { UserSignupData } from './SignupForm';
 export class SignupFormUtils {
   static validateUserFirstName(userFirstName: string): {
     validUserFirstName: boolean;
@@ -200,29 +199,6 @@ export class SignupFormUtils {
 
     return {
       validUserConfirmPassword: true,
-    };
-  }
-
-  static validateUserSignupData(userSignupData: UserSignupData): {
-    validUserSignupData: boolean;
-    errorMsg?: string;
-  } {
-    console.log(userSignupData);
-    if (
-      userSignupData.userFirstName === '' ||
-      userSignupData.userLastName === '' ||
-      userSignupData.userEmail === '' ||
-      userSignupData.userPassword === '' ||
-      userSignupData.userConfirmPassword === ''
-    ) {
-      return {
-        validUserSignupData: false,
-        errorMsg: 'Please fill in all fields.',
-      };
-    }
-
-    return {
-      validUserSignupData: true,
     };
   }
 }

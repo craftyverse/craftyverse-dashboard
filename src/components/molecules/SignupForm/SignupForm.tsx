@@ -1,68 +1,59 @@
-import { useState, useEffect } from "react";
-import { Button, Input, Checkbox } from "../../Common";
-import "./SignupForm.scss";
-import { AuthFormUtils } from "../../utils/authFormUtils";
-import { ApiCall } from "../../../utils/ApiCall";
-import { Link } from "react-router-dom";
-import { AuthFormContainer } from "../Containers";
+import { useState, useEffect } from 'react';
+import { Input } from '../../atoms/Input';
+import { Button } from '../../atoms/Button';
+import styles from './SignupForm.module.scss';
+import { SignupFormUtils } from './SignupFormUtils';
 
-export type UserSignupData = {
+type UserSignupData = {
   userFirstName: string;
   userLastName: string;
   userEmail: string;
   userPassword: string;
   userConfirmPassword: string;
-  userRoles: number[];
-  isTermsAndConditionsAccepted: boolean | undefined;
+  userRoles: string[];
 };
 
 export const SignupForm = () => {
   // user data to submit
   const [userSignupData, setUserSignupData] = useState<UserSignupData>({
-    userFirstName: "",
-    userLastName: "",
-    userEmail: "",
-    userPassword: "",
-    userConfirmPassword: "",
+    userFirstName: '',
+    userLastName: '',
+    userEmail: '',
+    userPassword: '',
+    userConfirmPassword: '',
     userRoles: [],
-    isTermsAndConditionsAccepted: false,
   });
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // useStates for First Name input
-  const [userFirstName, setUserFirstName] = useState<string>("");
+  const [userFirstName, setUserFirstName] = useState<string>('');
   const [userFirstNameErrorMsg, setUserFirstNameErrorMsg] = useState<
     string | undefined
-  >("");
+  >('');
 
   // useStates for Last Name input
-  const [userLastName, setUserLastName] = useState<string>("");
+  const [userLastName, setUserLastName] = useState<string>('');
   const [userLastNameErrorMsg, setUserLastNameErrorMsg] = useState<
     string | undefined
-  >("");
+  >('');
 
   // useStates for Email input
-  const [userEmail, setUserEmail] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>('');
   const [userEmailErrorMsg, setUserEmailErrorMsg] = useState<
     string | undefined
-  >("");
+  >('');
 
   // useStates for Password input
-  const [userPassword, setUserPassword] = useState<string>("");
+  const [userPassword, setUserPassword] = useState<string>('');
   const [userPasswordErrorMsg, setUserPasswordErrorMsg] = useState<
     string | undefined
-  >("");
+  >('');
 
   // useStates for Confirm Password input
-  const [userConfirmPassword, setUserConfirmPassword] = useState<string>("");
+  const [userConfirmPassword, setUserConfirmPassword] = useState<string>('');
   const [userConfirmPasswordErrorMsg, setUserConfirmPasswordErrorMsg] =
-    useState<string | undefined>("");
-
-  const [userFormErrorMsg, setUserFormErrorMsg] = useState<string>("");
-
-  const [isTermsAndConditionsChecked, setIsTermsAndConditionsChecked] =
-    useState<boolean>(false);
+    useState<string | undefined>('');
 
   useEffect(() => {
     if (
@@ -70,9 +61,7 @@ export const SignupForm = () => {
       userSignupData.userLastName !== userLastName ||
       userSignupData.userEmail !== userEmail ||
       userSignupData.userPassword !== userPassword ||
-      userSignupData.userConfirmPassword !== userConfirmPassword ||
-      userSignupData.isTermsAndConditionsAccepted !==
-        isTermsAndConditionsChecked
+      userSignupData.userConfirmPassword !== userConfirmPassword
     ) {
       setUserSignupData({
         userFirstName: userFirstName,
@@ -80,8 +69,7 @@ export const SignupForm = () => {
         userEmail: userEmail,
         userPassword: userPassword,
         userConfirmPassword: userConfirmPassword,
-        userRoles: [],
-        isTermsAndConditionsAccepted: isTermsAndConditionsChecked,
+        userRoles: [process.env.USER_ROLE_ID!],
       });
     }
   }, [
@@ -91,39 +79,43 @@ export const SignupForm = () => {
     userPassword,
     userConfirmPassword,
     userSignupData,
-    isTermsAndConditionsChecked,
   ]);
 
   // Handle form submission
   const handleFormSubmit = async () => {
     setIsLoading(true);
-    setUserFormErrorMsg(
-      AuthFormUtils.validateUserSignupData(userSignupData).errorMsg ?? ""
+    const response = await fetch(
+      `${process.env.AUTH_SERVICE_URL}/api/users/v1/authentication/registerUser`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userSignupData),
+      }
     );
-    await ApiCall.post(
-      `${
-        import.meta.env.VITE_AUTH_SERVICE_URL
-      }/api/users/v1/authentication/registeruser`,
-      userSignupData
-    );
+
+    await response.json();
 
     //TODO: save the data to a redux store (TBA)
     setIsLoading(false);
   };
 
   return (
-    <AuthFormContainer formTitle="Create your craftyverse account">
-      <div className="signupFormContent">
-        <div className="signupFormProfileNames">
+    <section className={styles.signupFormContainer}>
+      <div className={styles.signupFormContent}>
+        <h1>Create your craftyverse account</h1>
+        <div className={styles.signupFormProfileNames}>
           <Input
             inputType="text"
             labelName="First Name"
             placeholderName="Your first name"
             inputErrorMsg={userFirstNameErrorMsg}
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(event) => {
               setUserFirstName(event.target.value);
               setUserFirstNameErrorMsg(
-                AuthFormUtils.validateUserFirstName(event.target.value).errorMsg
+                SignupFormUtils.validateUserFirstName(event.target.value)
+                  .errorMsg
               );
             }}
           />
@@ -132,24 +124,25 @@ export const SignupForm = () => {
             labelName="Last Name"
             placeholderName="Your last name"
             inputErrorMsg={userLastNameErrorMsg}
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(event) => {
               setUserLastName(event.target.value);
               setUserLastNameErrorMsg(
-                AuthFormUtils.validateUserLastName(event.target.value).errorMsg
+                SignupFormUtils.validateUserLastName(event.target.value)
+                  .errorMsg
               );
             }}
           />
         </div>
-        <div className="signupFormInfo">
+        <div className={styles.signupFormInfo}>
           <Input
             inputType="email"
             labelName="Email"
             placeholderName="Your email"
             inputErrorMsg={userEmailErrorMsg}
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(event) => {
               setUserEmail(event.target.value);
               setUserEmailErrorMsg(
-                AuthFormUtils.validateUserEmail(event.target.value).errorMsg
+                SignupFormUtils.validateUserEmail(event.target.value).errorMsg
               );
             }}
           />
@@ -158,10 +151,11 @@ export const SignupForm = () => {
             labelName="Password"
             placeholderName="Your password"
             inputErrorMsg={userPasswordErrorMsg}
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(event) => {
               setUserPassword(event.target.value);
               setUserPasswordErrorMsg(
-                AuthFormUtils.validateUserPassword(event.target.value).errorMsg
+                SignupFormUtils.validateUserPassword(event.target.value)
+                  .errorMsg
               );
             }}
           />
@@ -170,10 +164,10 @@ export const SignupForm = () => {
             labelName="Confirm Password"
             placeholderName="Confirm your password"
             inputErrorMsg={userConfirmPasswordErrorMsg}
-            onBlur={(event: React.FocusEvent<HTMLInputElement>) => {
+            onBlur={(event) => {
               setUserConfirmPassword(event.target.value);
               setUserConfirmPasswordErrorMsg(
-                AuthFormUtils.validateUserConfirmPassword(
+                SignupFormUtils.validateUserConfirmPassword(
                   event.target.value,
                   userPassword
                 ).errorMsg
@@ -181,39 +175,16 @@ export const SignupForm = () => {
             }}
           />
         </div>
-        <div className="termsConditions">
-          <Checkbox
-            checked={isTermsAndConditionsChecked}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setIsTermsAndConditionsChecked(event.target.checked)
-            }
-            checkboxId="termsAndConditionsCheckbox"
-          >
-            <p>
-              By proceeding, you agree to the{" "}
-              <a className="termsAndConditionsLink" href="#">
-                Terms and Conditions
-              </a>
-            </p>
-          </Checkbox>
-        </div>
-        <div className="signupFormBtn">
+        <div className={styles.signupFormBtn}>
           <Button
             type="primary"
             size="large"
             buttonText="Sign up"
             onClick={handleFormSubmit}
             isLoading={isLoading}
-            errorMsg={userFormErrorMsg}
           />
         </div>
-        <p className="loginCta">
-          Already have an account?{" "}
-          <Link className="loginLink" to="/login">
-            Sign In
-          </Link>
-        </p>
       </div>
-    </AuthFormContainer>
+    </section>
   );
 };
