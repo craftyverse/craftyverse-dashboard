@@ -1,5 +1,5 @@
 import { UserSignupData } from "../Authentication/SignupForm/SignupForm";
-import { UserSignInData } from "../Authentication/SignInForm/SigninForm";
+import { UserSignInData } from "../Authentication/SignInForm/SignInForm";
 
 export class AuthFormUtils {
   static validateUserFirstName(userFirstName: string): {

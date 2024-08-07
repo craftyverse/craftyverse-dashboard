@@ -1,8 +1,17 @@
+@import "../../../styles//pallate.scss";
+
 .SigninFormContent {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin: 40px;
+
+  .registerLink {
+    text-decoration: none;
+    color: $logo-main;
+    font-weight: 600;
+  }
+
   .forgotPasswordCheckbox {
     display: flex;
     justify-content: space-between;

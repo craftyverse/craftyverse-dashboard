@@ -1,4 +1,4 @@
-import { SignInForm } from "./SigninForm";
+import { SignInForm } from "./SignInForm";
 import { renderWithRouter } from "../../../test/testUtils";
 import { fireEvent, screen } from "@testing-library/react";
 
