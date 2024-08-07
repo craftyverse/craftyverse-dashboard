@@ -1,0 +1,126 @@
+@import "../../../styles/pallate.scss";
+
+.buttonPrimary {
+  background-color: $logo-main;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  .buttonLarge {
+    display: flex;
+    justify-content: center;
+    height: 56px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: map-get($map: $grey-palette, $key: 0);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+
+  .buttonMedium {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: map-get($map: $grey-palette, $key: 0);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+
+  .buttonSmall {
+    display: flex;
+    justify-content: center;
+    height: 32px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: map-get($map: $grey-palette, $key: 0);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+}
+
+.buttonSecondary {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  color: $logo-main;
+  border: 1px solid $logo-main;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  .buttonLarge {
+    display: flex;
+    justify-content: center;
+    height: 56px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: $logo-main;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      border-radius: 15px;
+    }
+  }
+
+  .buttonMedium {
+    display: flex;
+    justify-content: center;
+    height: 48px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: $logo-main;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+  }
+
+  .buttonSmall {
+    display: flex;
+    justify-content: center;
+    height: 32px;
+    .button {
+      border: none;
+      background-color: transparent;
+      width: inherit;
+      color: $logo-main;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+    }
+  }
+}
+
+.buttonErrorMsg {
+  font-size: 12px;
+  color: $error-msg;
+}

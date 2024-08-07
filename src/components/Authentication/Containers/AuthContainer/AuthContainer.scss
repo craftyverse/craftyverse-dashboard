@@ -1,0 +1,27 @@
+@import "../../../../styles/global.scss";
+@import "../../../../styles/pallate.scss";
+
+.authContainerWrapper {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 1fr 1fr; /* equal width columns */
+  background-color: map-get($map: $milk-palette, $key: 200);
+
+  .authContainerContents {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .authContainerLogo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & h1 {
+      font-family: "Pacifico", cursive;
+      font-size: 48px;
+      color: $logo-main;
+    }
+  }
+}

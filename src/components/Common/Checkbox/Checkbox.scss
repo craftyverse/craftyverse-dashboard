@@ -1,0 +1,47 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/pallate.scss";
+
+.checkboxContainer {
+  display: flex;
+  align-items: center;
+  gap: map-get($spacers, 8);
+
+  .tickIcon {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+
+  input {
+    display: none;
+
+    & + label {
+      position: relative;
+      cursor: pointer;
+      padding-left: 30px;
+      display: inline-block;
+      color: map-get($map: $grey-palette, $key: 900);
+
+      &::before {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        outline: 1px solid map-get($map: $grey-palette, $key: 500);
+        left: 0;
+        top: 0;
+        border-radius: 50%;
+      }
+    }
+
+    &:checked + label::before {
+      background-color: $logo-main;
+      outline-color: $logo-main;
+    }
+
+    &:checked + label::after {
+      width: 8px;
+      height: 8px;
+    }
+  }
+}

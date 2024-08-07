@@ -1,0 +1,47 @@
+@import "../../../styles/pallate.scss";
+@import "../../../styles/variables.scss";
+
+.signupFormContent {
+  margin: 40px;
+
+  .signupFormProfileNames {
+    display: flex;
+    gap: 32px;
+    padding-top: 24px;
+    margin-bottom: 24px;
+  }
+
+  .signupFormInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .termsConditions {
+    display: flex;
+    align-items: center;
+    padding-top: map-get($spacers, 8);
+    .termsAndConditionsLink {
+      color: $logo-main;
+      font-weight: 600;
+      text-decoration: none;
+    }
+  }
+
+  .signupFormBtn {
+    margin: 24px 0;
+  }
+
+  & h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: map-get($map: $grey-palette, $key: 7);
+    margin: 0 0 20px 0;
+  }
+}
+
+.loginLink {
+  text-decoration: none;
+  color: $logo-main;
+  font-weight: 600;
+}
